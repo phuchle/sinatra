@@ -6,15 +6,21 @@ set :secret_number, rand(100)
 
 get '/' do
   guess = params["guess"]
+  cheat = params["cheat"]
+  cheat_mode = check_cheat_mode(cheat)
   message = check_guess(guess)
   background_color = set_background_color(message)
 
   erb :index, :locals => {
-    :number => settings.secret_number,
+    :number => cheat_mode,
     :message => message,
     :background_color => background_color,
     :guess_remaining => @@guess_remaining
   }
+end
+
+def check_cheat_mode(cheat)
+  cheat ? settings.secret_number : ""
 end
 
 def make_secret_number
