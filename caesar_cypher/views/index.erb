@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Caesar Cypher</title>
+  </head>
+  <body>
+    <form>
+      <p>
+        Enter the word/sentence to be encrypted:
+      </p>
+
+      <input type="text" name="string" />
+
+      <p>
+        Enter the shift factor (a number):
+      </p>
+
+      <input type="number" name="encrypt_shift" />
+      <input type="submit" value="Encrypt!" />
+    </form>
+    <p>
+      Encoded: <%= encrypted_string %>
+    </p>
+    <form>
+      <p>
+        Enter the word/sentence to be deciphered:
+      </p>
+
+      <input type="text" name="cypher" />
+
+      <p>
+        Enter the shift factor (a number):
+      </p>
+
+      <input type="number" name="decode_shift" />
+      <input type="submit" value="Decode!" />
+    </form>
+    <p>
+      Decoded: <%= decoded_string %>
+    </p>
+  </body>
+</html>
