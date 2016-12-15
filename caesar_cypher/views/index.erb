@@ -3,41 +3,60 @@
   <head>
     <meta charset="utf-8">
     <title>Caesar Cypher</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/stylesheet.css">
   </head>
   <body>
-    <form>
+    <div class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="item active">
+            <img src="/caesar.jpg" class="img-fluid banner" alt="Vercingetorix throws down his arms at the feet of Julius Caesar">
+              <div class="carousel-caption">
+                <h1>Caesar Cypher</h1>
+              </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid forms">
+        <h3>Encrypt a message</h3>
+        <form>
+        <p>
+          Enter the word/sentence to be encrypted:
+          <input class="input-medium" type="text" name="string" />
+        </p>
+
+        <p>
+          Enter the shift factor (a number):
+          <input class="input-medium" type="number" name="encrypt_shift" />
+        </p>
+
+        <input class="btn btn-primary" type="submit" value="Encrypt!" />
+      </form>
+      <br />
       <p>
-        Enter the word/sentence to be encrypted:
+        <strong> Encoded message: <%= encrypted_string %> </strong>
       </p>
+      <h3>Decode a message</h3>
+      <form>
+        <p>
+          Enter the word/sentence to be deciphered:
+          <input class="input-medium" type="text" name="cypher" />
+        </p>
 
-      <input type="text" name="string" />
 
+        <p>
+          Enter the shift factor (a number):
+          <input class="input-medium" type="number" name="decode_shift" />
+        </p>
+
+        <input class="btn btn-primary" type="submit" value="Decode!" />
+      </form>
+      <br />
       <p>
-        Enter the shift factor (a number):
+        <strong> Decoded message: <%= decoded_string %> </strong>
       </p>
-
-      <input type="number" name="encrypt_shift" />
-      <input type="submit" value="Encrypt!" />
-    </form>
-    <p>
-      Encoded: <%= encrypted_string %>
-    </p>
-    <form>
-      <p>
-        Enter the word/sentence to be deciphered:
-      </p>
-
-      <input type="text" name="cypher" />
-
-      <p>
-        Enter the shift factor (a number):
-      </p>
-
-      <input type="number" name="decode_shift" />
-      <input type="submit" value="Decode!" />
-    </form>
-    <p>
-      Decoded: <%= decoded_string %>
-    </p>
+  </div>
   </body>
 </html>

@@ -1,5 +1,20 @@
 require 'sinatra'
-require 'sinatra/reloader'
+require 'sinatra/reloader' if development?
+
+class CaesarCypher
+  def initialize(shift)
+    @alphabet = ("a".."z").to_a.join + ("A".."Z").to_a.join
+    @shifted_alphabet = @alphabet.chars.rotate(shift).join
+  end
+
+  def encrypt(text)
+    text.tr(@alphabet, @shifted_alphabet)
+  end
+
+  def decode(text)
+    text.tr(@shifted_alphabet, @alphabet)
+  end
+end
 
 get '/' do
   string = params["string"]
@@ -7,54 +22,14 @@ get '/' do
   cypher = params["cypher"]
   decode_shift = params["decode_shift"].to_i
 
-  encrypted_string = caesar_cypher(string, encrypt_shift) if cypher.nil? && !string.nil?
-  decoded_string = caesar_decypher(cypher, decode_shift) if string.nil? && !cypher.nil?
+  if cypher.nil? && !string.nil?
+    encrypted_string = CaesarCypher.new(encrypt_shift).encrypt(string)
+  elsif string.nil? && !cypher.nil?
+    decoded_string = CaesarCypher.new(decode_shift).decode(cypher)
+  end
 
   erb :index, :locals => {
     :encrypted_string => encrypted_string,
     :decoded_string => decoded_string
   }
-end
-
-@@alphabet = ("a".."z").to_a + ("A".."Z").to_a
-
-def caesar_cypher(string, shift_factor=0)
-	translated = []
-
-	string.split('').each do |letter|
-		if @@alphabet.include?(letter)
-			shifted_letter = (letter.ord + shift_factor)
-			if within_standard_alphabet?(shifted_letter)
-				translated << shifted_letter.chr
-			else
-				translated << (shifted_letter - 26).chr
-			end
-		else
-			translated << letter
-		end
-	end
-	translated.join
-end
-
-def caesar_decypher(string, shift_factor=0)
-	translated = []
-
-	string.split('').each do |letter|
-		if @@alphabet.include? letter
-			shifted_letter = (letter.ord - shift_factor)
-			if within_standard_alphabet?(shifted_letter)
-				translated << shifted_letter.chr
-			else
-				translated << (shifted_letter + 26).chr
-			end
-		else
-			translated << letter
-		end
-	end
-	translated.join
-end
-
-def within_standard_alphabet?(shifted_letter)
-  shifted_letter >= 65 && shifted_letter <= 90 ||
-  shifted_letter >= 97 && shifted_letter <= 122
 end
